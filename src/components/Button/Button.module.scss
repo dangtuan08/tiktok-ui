@@ -1,6 +1,9 @@
 .wrapper {
-    min-width: 100px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     font-size: 1.6rem;
+    min-width: 100px;
     font-weight: 700;
     cursor: pointer;
     user-select: none;
@@ -13,14 +16,35 @@
     & + .wrapper {
         margin-left: 8px;
     }
+
+    &.disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+}
+// nếu có icon cạnh nội dung trong Button thì cho mg left cách nhau ra cho đẹp
+.icon + .title,
+.title + .icon {
+    margin-left: 8px;
 }
 
 // Button style
+.rounded {
+    border-radius: 100px;
+    border: solid 1px rgba(22, 24, 35, 0.12);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
+    color: rgba(22, 24, 35, 0.75);
+    &:hover {
+        border-color: rgba(22, 24, 35, 0.2);
+        background-color: rgba(22, 24, 35, 0.03);
+    }
+}
+
 .primary {
     background-color: var(--primary-color);
     color: var(--white);
     &:hover {
-        border-color: var(--primary);
+        border-color: var(--primary-color);
         background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
     }
 }
@@ -36,6 +60,18 @@
     border-color: var(--primary-color);
     color: var(--primary-color);
     &:hover {
+        border-color: var(--primary-color);
         background-color: rgba(254, 44, 85, 0.06);
     }
+}
+
+// Button size
+.small {
+    min-width: 88px;
+    padding: 4px 16px;
+}
+
+.large {
+    padding: 14px 16px;
+    min-width: 140px;
 }

@@ -38,17 +38,33 @@ function Button({
         props.href = href;
         Component = 'a';
     }
-    console.log(Component);
+
+    //Nếu button có props disabled thì duyệt hết props để loại các sự kiện handle event
+    if (disabled) {
+        // delete props.onClick
+        Object.keys(props).forEach((key) => {
+            if (key.startsWith('on') && typeof props[key] === 'function') {
+                delete props[key];
+            }
+        })
+    }
+
     // nhận các props là các style của button, tạo class với lên tương ứng props truyền vào để css
     const classNames = cx('wrapper', {
+        [className]: className,
         primary: primary,
         text: text,
         outline,
+        rounded,
+        small,
+        disabled,
     });
 
     return (
         <Component className={classNames} {...props}>
-            {children}
+            {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
+            <span className={cx('title')}>{children}</span>
+            {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Component>
     );
 }

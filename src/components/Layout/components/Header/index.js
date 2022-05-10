@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faMagnifyingGlass, faRightToBracket, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 import { useState, useEffect } from 'react';
 
@@ -56,13 +56,13 @@ function Header() {
                 </Tippy>
 
                 <div className={cx('actions')}>
-                    <Button text href="https://fullstack.edu.vn/" target="_blank">
-                        Tải lên
+                    <Button text >
+                        Upload
                     </Button>
-                    <Button primary>Đăng Nhập</Button>
+                    <Button primary leftIcon={<FontAwesomeIcon icon={faRightToBracket} />}>Login</Button>
                 </div>
             </div>
-        </header>
+        </header >
     );
 }
 
