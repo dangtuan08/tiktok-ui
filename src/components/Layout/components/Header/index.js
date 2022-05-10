@@ -2,24 +2,23 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 import styles from './Header.module.scss';
 import images from '~/assets/images';
-import { Wrapper as PopperWrapper } from '~/components/Popper'
+import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
 function Header() {
-
-    const [searchResult, setSearchResult] = useState([])
+    const [searchResult, setSearchResult] = useState([]);
     useEffect(() => {
         setTimeout(() => {
-            setSearchResult([])
+            setSearchResult([]);
         }, 1110);
-
-    }, [])
+    }, []);
 
     return (
         <header className={cx('wrapper')}>
@@ -29,7 +28,7 @@ function Header() {
                 <Tippy
                     interactive
                     visible={searchResult.length > 0}
-                    render={attrs => (
+                    render={(attrs) => (
                         <PopperWrapper>
                             <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                                 <h4 className={cx('search-title')}>Tài khoản</h4>
@@ -56,7 +55,12 @@ function Header() {
                     </div>
                 </Tippy>
 
-                <div className={cx('actions')}></div>
+                <div className={cx('actions')}>
+                    <Button text href="https://fullstack.edu.vn/" target="_blank">
+                        Tải lên
+                    </Button>
+                    <Button primary>Đăng Nhập</Button>
+                </div>
             </div>
         </header>
     );
