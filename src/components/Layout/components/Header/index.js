@@ -25,6 +25,21 @@ const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
         title: 'English',
+        children: {
+            title: 'Language',
+            data: [
+                {
+                    type: 'language',
+                    code: 'en',
+                    title: 'English',
+                },
+                {
+                    type: 'language',
+                    code: 'vi',
+                    title: 'Tiếng Việt',
+                },
+            ],
+        },
     },
     {
         icon: <FontAwesomeIcon icon={faCircleQuestion} />,
@@ -46,6 +61,19 @@ function Header() {
         }, 0);
     }, []);
 
+    // Nhận item được click trong menu nếu item đó không có children
+    const handleMenuChange = (menuItem) => {
+        // console.log(menuItem);
+        switch (menuItem.type) {
+            case 'language':
+                //handle change language
+                console.log(menuItem);
+                break;
+
+            default:
+                break;
+        }
+    };
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -84,7 +112,7 @@ function Header() {
                     <Button text>Upload</Button>
                     <Button primary>Login</Button>
 
-                    <Menu items={MENU_ITEMS}>
+                    <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
                         <button className={cx('more-btn')}>
                             <FontAwesomeIcon icon={faEllipsisVertical} />
                         </button>
