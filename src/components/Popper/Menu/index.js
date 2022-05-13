@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Tippy from '@tippyjs/react/headless';
+import HeadlessTippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
@@ -47,8 +47,11 @@ function Menu({ children, items = [], onChange = defaultFn }) {
     };
 
     return (
-        <Tippy
+        <HeadlessTippy
+            arrow={true}
             interactive
+            // di chuyển vị trí hiển thị Tippy offset={[ sang trái/phải, lên trên/dưới]}
+            offset={[16, 8]}
             delay={[0, 800]}
             // visible
             placement="bottom-end"
@@ -69,9 +72,12 @@ function Menu({ children, items = [], onChange = defaultFn }) {
                     </PopperWrapper>
                 </div>
             )}
+            onHide={() => {
+                setHistory((prev) => prev.slice(0, 1));
+            }}
         >
             {children}
-        </Tippy>
+        </HeadlessTippy>
     );
 }
 
