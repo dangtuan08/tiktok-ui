@@ -109,14 +109,31 @@
 
 .action-btn {
     background-color: transparent;
-    padding: 4px 12px;
+    padding: 4px 10px;
     font-size: 2.2rem;
     color: #161823;
     cursor: pointer;
+    display: flex;
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0px 6px;
+    background-color: var(--primary-color);
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: 'ProximaNova', sans-serif;
 }
 
 .user-avatar {
-    margin-left: 24px;
+    margin-left: 14px;
     width: 32px;
     height: 32px;
     border-radius: 50%;
