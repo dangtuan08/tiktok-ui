@@ -14,22 +14,33 @@ const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
-    const [showResult, setShowResult] = useState();
+    const [showResult, setShowResult] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const inputRef = useRef();
 
-    // Giả xử khi gõ vào input searchValue thay đổi, setSearchResult , setShowResult để hiện result tìm kiếm.
+    const handleClick = () => {
+        setSearchResult([]);
+    };
+    // Giả xử khi gõ vào input searchValue thay đổi,
+    // setSearchResult , setShowResult để hiện result tìm kiếm.
     useEffect(() => {
-        if (!!searchValue) {
-            setSearchResult([searchValue]);
+        if (!searchValue.trim()) {
+            setSearchResult([]);
+            return;
         }
+        setLoading(true);
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
+            .then((res) => res.json())
+            .then((res) => {
+                // console.log(res.data);
+                setSearchResult(res.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
     }, [searchValue]);
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setSearchResult([1, 2, 3]);
-    //     }, 0);
-    // }, []);
 
     // Nếu ấn nút xóa thì setSearchValue = '', setSearchResult = [] và focus lại ô input
     const handleClear = () => {
@@ -51,10 +62,9 @@ function Search() {
                 <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                     <PopperWrapper>
                         <h4 className={cx('search-title')}>Accounts</h4>
-                        <AccountItem />
-                        <AccountItem />
-                        <AccountItem />
-                        <AccountItem />
+                        {searchResult.map((item) => {
+                            return <AccountItem data={item} key={item.id} onClick={handleClick} />;
+                        })}
                     </PopperWrapper>
                 </div>
             )}
@@ -69,7 +79,7 @@ function Search() {
                     onChange={(e) => setSearchValue(e.target.value)}
                     onFocus={() => setShowResult(true)}
                 />
-                {!!searchValue && (
+                {!loading && !!searchValue && (
                     <button className={cx('clear')} onClick={handleClear}>
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
@@ -78,7 +88,7 @@ function Search() {
                     <FontAwesomeIcon icon={faCircleXmark} />
                 </button> */}
 
-                {/* <FontAwesomeIcon className={cx('loading')} icon={faSpinner} /> */}
+                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
 
                 <button className={cx('search-btn')}>
                     <SearchIcon />

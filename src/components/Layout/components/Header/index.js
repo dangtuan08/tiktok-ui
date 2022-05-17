@@ -101,6 +101,8 @@ function Header() {
 
                 {/* Search input */}
                 <Search />
+
+                {/* Right Header */}
                 <div className={cx('actions')}>
                     {currentUser ? (
                         <>
