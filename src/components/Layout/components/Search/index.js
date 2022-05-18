@@ -8,6 +8,7 @@ import { SearchIcon } from '~/components/Icons';
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import AccountItem from '~/components/AccountItem';
 import styles from './Search.module.scss';
+import { useDebounce } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
@@ -17,20 +18,24 @@ function Search() {
     const [showResult, setShowResult] = useState(true);
     const [loading, setLoading] = useState(false);
 
+    // khi searchValue thay đổi thì sẽ re-render, gọi lại hook useDebounce sau 500ms thì sẽ trả về đúng giá trị searchValue nhận vào
+    const debouncedValue = useDebounce(searchValue, 500);
+
     const inputRef = useRef();
 
     const handleClick = () => {
         setSearchResult([]);
+        setSearchValue('');
     };
-    // Giả xử khi gõ vào input searchValue thay đổi,
-    // setSearchResult , setShowResult để hiện result tìm kiếm.
+
+    // useEffect chỉ chạy khi nhận đc debouncedValue thay đổi. Mỗi lần thay đổi sẽ delay 500ms nên api không gọi liên tục mà 500ms mới gọi 1 lần
     useEffect(() => {
-        if (!searchValue.trim()) {
+        if (!debouncedValue.trim()) {
             setSearchResult([]);
             return;
         }
         setLoading(true);
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchValue)}&type=less`)
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedValue)}&type=less`)
             .then((res) => res.json())
             .then((res) => {
                 // console.log(res.data);
@@ -40,7 +45,7 @@ function Search() {
             .catch(() => {
                 setLoading(false);
             });
-    }, [searchValue]);
+    }, [debouncedValue]);
 
     // Nếu ấn nút xóa thì setSearchValue = '', setSearchResult = [] và focus lại ô input
     const handleClear = () => {
