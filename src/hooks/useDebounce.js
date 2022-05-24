@@ -9,10 +9,10 @@ function useDebounce(value, delay) {
         return () => {
             // clear nếu useEffect được gọi lại
             clearInterval(handle);
-            console.log('Hủy', debouncedValue);
+            // console.log('Hủy', debouncedValue);
         };
     }, [value]);
-    console.log(debouncedValue);
+    // console.log(debouncedValue);
 
     return debouncedValue;
 }

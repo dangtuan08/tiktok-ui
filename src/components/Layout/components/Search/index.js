@@ -9,6 +9,7 @@ import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import AccountItem from '~/components/AccountItem';
 import styles from './Search.module.scss';
 import { useDebounce } from '~/hooks';
+import * as searchServices from '~/apiServices/searchServices';
 
 const cx = classNames.bind(styles);
 
@@ -30,21 +31,23 @@ function Search() {
 
     // useEffect chỉ chạy khi nhận đc debouncedValue thay đổi. Mỗi lần thay đổi sẽ delay 500ms nên api không gọi liên tục mà 500ms mới gọi 1 lần
     useEffect(() => {
+        //Kiểm tra rỗng và chỉ nhập khoảng trắng
         if (!debouncedValue.trim()) {
             setSearchResult([]);
             return;
         }
+
+        // setLoading để hiện nút spiner trong khi chờ api
         setLoading(true);
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedValue)}&type=less`)
-            .then((res) => res.json())
-            .then((res) => {
-                // console.log(res.data);
-                setSearchResult(res.data);
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
+
+        //dùng async await thay vì promise.then().catch
+        const fetchApi = async () => {
+            const res = await searchServices.search(debouncedValue);
+            // console.log(res);
+            setSearchResult(res);
+            setLoading(false);
+        };
+        fetchApi();
     }, [debouncedValue]);
 
     // Nếu ấn nút xóa thì setSearchValue = '', setSearchResult = [] và focus lại ô input
