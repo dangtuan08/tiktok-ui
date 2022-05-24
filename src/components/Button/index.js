@@ -17,6 +17,7 @@ function Button({
     large = false,
     children,
     className,
+    titleClassname,
     leftIcon,
     rightIcon,
     onClick,
@@ -46,7 +47,7 @@ function Button({
             if (key.startsWith('on') && typeof props[key] === 'function') {
                 delete props[key];
             }
-        })
+        });
     }
 
     // nhận các props là các style của button, tạo class với lên tương ứng props truyền vào để css
@@ -63,7 +64,7 @@ function Button({
     return (
         <Component className={classNames} {...props}>
             {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
-            <span className={cx('title')}>{children}</span>
+            <span className={cx('title', { [titleClassname]: titleClassname })}>{children}</span>
             {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Component>
     );

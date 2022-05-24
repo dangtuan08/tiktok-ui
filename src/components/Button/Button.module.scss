@@ -29,7 +29,10 @@
 }
 
 .icon {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // display: inline-block;
     width: 24px;
     text-align: center;
 }
