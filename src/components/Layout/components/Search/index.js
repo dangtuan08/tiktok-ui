@@ -40,14 +40,24 @@ function Search() {
         // setLoading để hiện nút spiner trong khi chờ api
         setLoading(true);
 
-        //dùng async await thay vì promise.then().catch
-        const fetchApi = async () => {
-            const res = await searchServices.search(debouncedValue);
-            // console.log(res);
-            setSearchResult(res);
-            setLoading(false);
-        };
-        fetchApi();
+        // C1: dùng async await thay vì promise.then().catch()
+
+        // const fetchApi = async () => {
+        //     const res = await searchServices.search(debouncedValue);
+        //     // console.log(res);
+        //     setSearchResult(res);
+        //     setLoading(false);
+        // };
+        // fetchApi();
+
+        // C2: dùng promise.then().catch()
+        searchServices
+            .search(debouncedValue)
+            .then((res) => {
+                setSearchResult(res);
+                setLoading(false);
+            })
+            .catch((err) => console.log(err));
     }, [debouncedValue]);
 
     // Nếu ấn nút xóa thì setSearchValue = '', setSearchResult = [] và focus lại ô input
