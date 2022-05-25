@@ -9,6 +9,7 @@ import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import AccountItem from '~/components/AccountItem';
 import styles from './Search.module.scss';
 import { useDebounce } from '~/hooks';
+import * as SearchApi from '~/apiServices/searchService';
 
 const cx = classNames.bind(styles);
 
@@ -35,13 +36,13 @@ function Search() {
             return;
         }
         setLoading(true);
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debouncedValue)}&type=less`)
-            .then((res) => res.json())
+
+        SearchApi.search(debouncedValue)
             .then((res) => {
-                // console.log(res.data);
-                setSearchResult(res.data);
+                setSearchResult(res);
                 setLoading(false);
             })
+
             .catch(() => {
                 setLoading(false);
             });
