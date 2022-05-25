@@ -37,15 +37,22 @@ function Search() {
         }
         setLoading(true);
 
-        SearchApi.search(debouncedValue)
-            .then((res) => {
-                setSearchResult(res);
-                setLoading(false);
-            })
+        // IIFE ES6 (arrow funtion)()để tạo function chạy ngay
+        (async () => {
+            const res = await SearchApi.search(debouncedValue);
+            setSearchResult(res);
+            setLoading(false);
+        })();
 
-            .catch(() => {
-                setLoading(false);
-            });
+        // SearchApi.search(debouncedValue)
+        //     .then((res) => {
+        //         setSearchResult(res);
+        //         setLoading(false);
+        //     })
+
+        //     .catch(() => {
+        //         setLoading(false);
+        //     });
     }, [debouncedValue]);
 
     // Nếu ấn nút xóa thì setSearchValue = '', setSearchResult = [] và focus lại ô input
