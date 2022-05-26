@@ -57,8 +57,10 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
             hideOnClick={hideOnClick}
             placement="bottom-end"
             render={(attrs) => (
+                // CONTENT TIPPY MENU
                 <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
                     <PopperWrapper className={cx('menu-popper')}>
+                        {/* HEADER IN SUB MENU */}
                         {history.length > 1 && (
                             <Header
                                 title={'Language'}
@@ -69,7 +71,8 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
                                 }}
                             />
                         )}
-                        {renderItems()}
+                        {/* MENU ITEMS OR SUB MENU ITEMS */}
+                        <div className={cx('menu-body')}>{renderItems()}</div>
                     </PopperWrapper>
                 </div>
             )}

@@ -80,54 +80,58 @@ function Search() {
     };
 
     return (
-        <HeadlessTippy
-            interactive
-            // trigger={'click'}
-            visible={showResult && searchResult.length > 0}
-            render={(attrs) => (
-                <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper>
-                        <h4 className={cx('search-title')}>Accounts</h4>
-                        {searchResult.map((item) => {
-                            return <AccountItem data={item} key={item.id} onClick={handleClick} />;
-                        })}
-                    </PopperWrapper>
-                </div>
-            )}
-            onClickOutside={handleHideResult}
-        >
-            <div className={cx('search')}>
-                <input
-                    ref={inputRef}
-                    value={searchValue}
-                    placeholder="Search accounts and videos"
-                    spellCheck={false}
-                    onChange={handleChange}
-                    onFocus={() => setShowResult(true)}
-                />
-                {!loading && !!searchValue && (
-                    <button className={cx('clear')} onClick={handleClear}>
-                        <FontAwesomeIcon icon={faCircleXmark} />
-                    </button>
+        // Using a wrapper <div> tag around the reference element solves
+        // this by creating a new parentNode context.
+        <div>
+            <HeadlessTippy
+                interactive
+                // trigger={'click'}
+                visible={showResult && searchResult.length > 0}
+                render={(attrs) => (
+                    <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+                        <PopperWrapper>
+                            <h4 className={cx('search-title')}>Accounts</h4>
+                            {searchResult.map((item) => {
+                                return <AccountItem data={item} key={item.id} onClick={handleClick} />;
+                            })}
+                        </PopperWrapper>
+                    </div>
                 )}
-                {/* <button className={cx('clear')}>
-                    <FontAwesomeIcon icon={faCircleXmark} />
-                </button> */}
+                onClickOutside={handleHideResult}
+            >
+                <div className={cx('search')}>
+                    <input
+                        ref={inputRef}
+                        value={searchValue}
+                        placeholder="Search accounts and videos"
+                        spellCheck={false}
+                        onChange={handleChange}
+                        onFocus={() => setShowResult(true)}
+                    />
+                    {!loading && !!searchValue && (
+                        <button className={cx('clear')} onClick={handleClear}>
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                        </button>
+                    )}
+                    {/* <button className={cx('clear')}>
+                        <FontAwesomeIcon icon={faCircleXmark} />
+                    </button> */}
 
-                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
+                    {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
 
-                <button
-                    className={cx('search-btn')}
-                    onMouseDown={(e) => {
-                        // Hủy thuộc tính mặc định để khi click không hiện border div search, và bỏ focus ô input
-                        e.preventDefault();
-                        inputRef.current.blur();
-                    }}
-                >
-                    <SearchIcon />
-                </button>
-            </div>
-        </HeadlessTippy>
+                    <button
+                        className={cx('search-btn')}
+                        onMouseDown={(e) => {
+                            // Hủy thuộc tính mặc định để khi click không hiện border div search, và bỏ focus ô input
+                            e.preventDefault();
+                            inputRef.current.blur();
+                        }}
+                    >
+                        <SearchIcon />
+                    </button>
+                </div>
+            </HeadlessTippy>
+        </div>
     );
 }
 
