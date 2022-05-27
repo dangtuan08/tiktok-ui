@@ -48,6 +48,7 @@ function Menu({ children, items = [], onChange = defaultFn }) {
 
     return (
         <HeadlessTippy
+            hideOnClick={false}
             arrow={true}
             interactive
             // di chuyển vị trí hiển thị Tippy offset={[ sang trái/phải, lên trên/dưới]}
@@ -68,7 +69,7 @@ function Menu({ children, items = [], onChange = defaultFn }) {
                                 }}
                             />
                         )}
-                        {renderItems()}
+                        <div className={cx('menu-body')}>{renderItems()}</div>
                     </PopperWrapper>
                 </div>
             )}
