@@ -11,8 +11,8 @@ function useDebounce(value, delay) {
             clearInterval(handle);
             // console.log('clearInterval', debouncedValue);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
-    // console.log(debouncedValue);
 
     return debouncedValue;
 }

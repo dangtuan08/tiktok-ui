@@ -9,7 +9,7 @@ import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import AccountItem from '~/components/AccountItem';
 import styles from './Search.module.scss';
 import { useDebounce } from '~/hooks';
-import * as SearchApi from '~/apiServices/searchService';
+import * as SearchApi from '~/services/searchService';
 
 const cx = classNames.bind(styles);
 
