@@ -46,7 +46,7 @@ function Button({
             if (key.startsWith('on') && typeof props[key] === 'function') {
                 delete props[key];
             }
-        })
+        });
     }
 
     // nhận các props là các style của button, tạo class với lên tương ứng props truyền vào để css
