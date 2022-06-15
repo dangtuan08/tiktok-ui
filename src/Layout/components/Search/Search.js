@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
-    const [showResult, setShowResult] = useState(true);
+    const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
     // khi searchValue thay đổi thì sẽ re-render, gọi lại hook useDebounce sau 500ms thì sẽ trả về đúng giá trị searchValue nhận vào

@@ -47,6 +47,27 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
         // })
     };
 
+    const handleBack = () => {
+        setHistory((prev) => prev.slice(0, prev.length - 1));
+    };
+
+    const renderResult = (attrs) => (
+        // CONTENT TIPPY MENU
+        <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
+            <PopperWrapper className={cx('menu-popper')}>
+                {/* HEADER IN SUB MENU */}
+                {history.length > 1 && <Header title={current.title} onBack={handleBack} />}
+                {/* MENU ITEMS OR SUB MENU ITEMS */}
+                <div className={cx('menu-body')}>{renderItems()}</div>
+            </PopperWrapper>
+        </div>
+    );
+
+    // Reset to first page
+    const handleReset = () => {
+        setHistory((prev) => prev.slice(0, 1));
+    };
+
     return (
         <HeadlessTippy
             arrow={true}
@@ -57,29 +78,8 @@ function Menu({ children, items = [], hideOnClick = false, onChange = defaultFn 
             // visible
             hideOnClick={hideOnClick}
             placement="bottom-end"
-            render={(attrs) => (
-                // CONTENT TIPPY MENU
-                <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
-                    <PopperWrapper className={cx('menu-popper')}>
-                        {/* HEADER IN SUB MENU */}
-                        {history.length > 1 && (
-                            <Header
-                                title={current.title}
-                                onBack={() => {
-                                    return setHistory((prev) => {
-                                        return prev.slice(0, prev.length - 1);
-                                    });
-                                }}
-                            />
-                        )}
-                        {/* MENU ITEMS OR SUB MENU ITEMS */}
-                        <div className={cx('menu-body')}>{renderItems()}</div>
-                    </PopperWrapper>
-                </div>
-            )}
-            onHide={() => {
-                setHistory((prev) => prev.slice(0, 1));
-            }}
+            render={renderResult}
+            onHide={handleReset}
         >
             {children}
         </HeadlessTippy>
